@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/brew_log_provider.dart';
+import '../providers/coffee_provider.dart';
 import 'add_edit_brew_log_screen.dart';
 
 class MyLogsScreen extends StatelessWidget {

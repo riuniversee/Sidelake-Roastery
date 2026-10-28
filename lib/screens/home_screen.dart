@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/coffee_provider.dart';
-import 'bean_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -54,7 +53,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Row(
-              mainAxisAlignment: MainAxisAlignment.between,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
                   'Katalog Unggulan',
@@ -85,11 +84,17 @@ class HomeScreen extends StatelessWidget {
                         child: ListTile(
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            image: NetworkImage(bean.imageUrl),
+                            child: Image.network(
+                              bean.imageUrl,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                          title: Text(bean.name,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          title: Text(
+                            bean.name,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           subtitle: Text('${bean.origin} • Rp ${bean.price}'),
                           trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                         ),

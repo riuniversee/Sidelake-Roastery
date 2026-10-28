@@ -97,7 +97,7 @@ class _AddEditBrewLogScreenState extends State<AddEditBrewLogScreen> {
               ),
               const SizedBox(height: 12),
               Row(
-                mainAxisAlignment: MainAxisAlignment.between,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Rating Rasa:'),
                   Text('${_rating.toStringAsFixed(1)} ⭐',
