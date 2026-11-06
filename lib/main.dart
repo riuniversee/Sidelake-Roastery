@@ -9,18 +9,28 @@ import 'repositories/brew_log_repository.dart';
 import 'providers/coffee_provider.dart';
 import 'providers/brew_log_provider.dart';
 import 'screens/main_navigation_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() async {
-  // 1. Pastikan binding flutter siap
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 2. Inisialisasi koneksi ke Supabase menggunakan URL kamu
+  await dotenv.load(fileName: ".env");
+
   await Supabase.initialize(
-    url: 'https://ksplulbfrwpmzhdefznq.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtzcGx1bGJmcndwbXpoZGVmem5xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxODEzNTAsImV4cCI6MjEwODc1NzM1MH0.E3u4pxI3vD3g9wGcQmK3hS2EHlBSb1hCqLge2fb080Q',
+    url: dotenv.env['SUPABASE_URL']!,
+    publishableKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
 
   runApp(const SidelakeRoasteryApp());
+}
+class AppColors {
+  static const Color primary = Color(0xFF4A2B20); // Cokelat Kopi Tua
+  static const Color secondary = Color(0xFFC89B7B); // Warm Caramel
+  static const Color background = Color(0xFFFDF8F5); // Cream Warm Background
+  static const Color cardBg = Color(0xFFFFFFFF);
+  static const Color textDark = Color(0xFF2C1810);
+  static const Color textMuted = Color(0xFF8D7B74);
 }
 
 class SidelakeRoasteryApp extends StatelessWidget {

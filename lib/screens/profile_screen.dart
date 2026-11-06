@@ -22,12 +22,12 @@ class ProfileScreen extends StatelessWidget {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const Text(
-              'NIM: 2415091000',
+              '',
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
             const SizedBox(height: 8),
             const Text(
-              'Teknologi Rekayasa Perangkat Lunak (TRPL)\nUniversitas Pendidikan Ganesha (Undiksha)',
+              'Sidelake Roastery - Barista',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14),
             ),
