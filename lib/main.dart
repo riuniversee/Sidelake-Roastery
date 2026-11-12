@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'services/api_service.dart';
 import 'services/supabase_service.dart';
@@ -8,9 +9,9 @@ import 'repositories/coffee_repository.dart';
 import 'repositories/brew_log_repository.dart';
 import 'providers/coffee_provider.dart';
 import 'providers/brew_log_provider.dart';
+import 'providers/auth_provider.dart'; // <-- Pastikan file ini sudah dibuat sebelumnya
 import 'screens/main_navigation_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'screens/login_screen.dart';     // <-- Import halaman login kamu
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +20,12 @@ Future<void> main() async {
 
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
-    publishableKey: dotenv.env['SUPABASE_ANON_KEY']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
   );
 
   runApp(const SidelakeRoasteryApp());
 }
+
 class AppColors {
   static const Color primary = Color(0xFF4A2B20); // Cokelat Kopi Tua
   static const Color secondary = Color(0xFFC89B7B); // Warm Caramel
@@ -38,8 +40,12 @@ class SidelakeRoasteryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Mengecek apakah user sudah memiliki sesi login aktif di Supabase
+    final bool isLoggedin = Supabase.instance.client.auth.currentSession != null;
+
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()), // <-- Ditambahkan di sini
         ChangeNotifierProvider(
           create: (_) => CoffeeProvider(
             repository: CoffeeRepository(apiService: ApiService()),
@@ -63,7 +69,8 @@ class SidelakeRoasteryApp extends StatelessWidget {
             elevation: 0,
           ),
         ),
-        home: const MainNavigationScreen(),
+        // Jika belum login, buka LoginScreen. Jika sudah, buka MainNavigationScreen.
+        home: isLoggedin ? const MainNavigationScreen() : const LoginScreen(),
       ),
     );
   }
